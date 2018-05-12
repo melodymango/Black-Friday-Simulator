@@ -23,8 +23,7 @@ public class PlayerResources : NetworkBehaviour {
 	void Update () {
         
         //Only update/render UI for local player because each player may have differing amounts of money.
-        if (!isLocalPlayer)
-        {
+        if (!isLocalPlayer) {
             return;
         }
         //Displays current money amount for the player
@@ -32,19 +31,16 @@ public class PlayerResources : NetworkBehaviour {
     }
 
     //Decrements the amount of money the player has
-    public void DecrementAmount(float amount)
-    {
+    public void DecrementAmount(float amount) {
         //Only the server shoud have the authority to do this
-        if (!isServer)
-        {
+        if (!isServer) {
             return;
         }
 
         currentMoney -= amount;
     }
 
-    public float GetCurrentMoney()
-    {
+    public float GetCurrentMoney() {
         return currentMoney;
     }
 }

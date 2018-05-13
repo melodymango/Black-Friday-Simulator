@@ -9,7 +9,6 @@ public class PlayerController : NetworkBehaviour {
     private bool canPickUp = false;
     [SyncVar]
     public GameObject itemToPickUp = null;
-    private NetworkIdentity objNetId;
 
 
     //Only do this for the local player
@@ -31,7 +30,7 @@ public class PlayerController : NetworkBehaviour {
         GetComponent<Rigidbody2D>().velocity = targetVelocity * playerSpeed;
 
         if (Input.GetKeyDown(KeyCode.Space) && canPickUp) {
-            itemToPickUp.gameObject.GetComponent<Pickup>().CmdPickupItem();
+            CmdPickupItem();
         }
 
         //old movement code, didn't work for collisions but I'm keeping this here just in case
@@ -42,25 +41,32 @@ public class PlayerController : NetworkBehaviour {
         transform.Translate(0, y, 0);*/
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Pickup")
-        {
-            collision.gameObject.GetComponent<NetworkIdentity>().AssignClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.tag == "Pickup") {
             canPickUp = true;
             itemToPickUp = collision.gameObject;
-            Debug.Log("Can pick up item.");
+            //Debug.Log("Can pick up item.");
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.tag == "Pickup")
-        {
-            collision.gameObject.GetComponent<NetworkIdentity>().RemoveClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
+    private void OnTriggerExit2D(Collider2D collision) {
+        if (collision.tag == "Pickup") {
             canPickUp = false;
             itemToPickUp = null;
-            Debug.Log("Can no longer pick up item.");
+            //Debug.Log("Can no longer pick up item.");
+        }
+    }
+
+    [Command]
+    public void CmdPickupItem() {
+        //Debug.Log("CmdPickupItem() is being called.");
+        var playerCurrentMoney = GetComponent<PlayerResources>();
+        //Will not let the player pickup the item if buying it will reduce their current money below 0.
+        if (playerCurrentMoney != null && playerCurrentMoney.GetCurrentMoney() - itemToPickUp.GetComponent<Pickup>().GetPrice() >= 0) {
+            playerCurrentMoney.DecrementAmount(itemToPickUp.GetComponent<Pickup>().GetPrice());
+            Destroy(itemToPickUp);
+            itemToPickUp = null;
+            canPickUp = false;
         }
     }
 }

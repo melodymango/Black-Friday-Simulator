@@ -10,6 +10,8 @@ public class PlayerResources : NetworkBehaviour {
 
     public const float startingMoney = 100f;
     public Text currentMoneyText; //the UI element that displays their money
+    public Text shoppingListText; //UI element that shows shopping list
+    private List<string> shoppingList = new List<string>();
 
     [SyncVar]
     private float currentMoney = startingMoney;
@@ -36,11 +38,15 @@ public class PlayerResources : NetworkBehaviour {
         if (!isServer) {
             return;
         }
-
         currentMoney -= amount;
     }
 
     public float GetCurrentMoney() {
         return currentMoney;
+    }
+
+    public void SetShoppingList(List<string> l) {
+        shoppingList = new List<string>();
+        shoppingList = l;
     }
 }

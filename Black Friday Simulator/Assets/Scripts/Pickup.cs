@@ -41,7 +41,7 @@ public class Pickup : NetworkBehaviour
     }
 
     private void OnTriggerExit2D(Collider2D other) {
-        if (other.tag == "Player") {
+        if (other.tag == "Player" && player) {
             hasPlayer = false;
             player = null;
         }
@@ -61,12 +61,12 @@ public class Pickup : NetworkBehaviour
         this.price = price;
     }
 
+    /*
     //make the item get picked up
     [Command]
     public void CmdPickupItem()
     {
         Debug.Log("CmdPickupItem() is being called.");
-
         var playerCurrentMoney = player.gameObject.GetComponent<PlayerResources>();
         //Will not let the player pickup the item if buying it will reduce their current money below 0.
         if (playerCurrentMoney != null && playerCurrentMoney.GetCurrentMoney() - price >= 0)
@@ -76,7 +76,20 @@ public class Pickup : NetworkBehaviour
             hasPlayer = false;
             player = null;
         }
+    }*/
+
+    public bool HasPlayer()
+    {
+        return hasPlayer;
     }
 
+    public GameObject GetPlayer()
+    {
+        return player;
+    }
 
+    public float GetPrice()
+    {
+        return price;
+    }
 }

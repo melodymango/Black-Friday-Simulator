@@ -31,7 +31,7 @@ public class PlayerController : NetworkBehaviour {
         Vector2 targetVelocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         GetComponent<Rigidbody2D>().velocity = targetVelocity * playerSpeed;
 
-        if (Input.GetKeyDown(KeyCode.Space) && canPickUp) {
+        if (Input.GetKeyDown(KeyCode.Space) && itemToPickUp && canPickUp) {
             CmdPickupItem();
         }
 
@@ -70,7 +70,7 @@ public class PlayerController : NetworkBehaviour {
             //add the picked up item to the player's inventory
             GetComponent<PlayerResources>().CmdAddItemToInventory(itemToPickUp.GetComponent<Pickup>().ToString());
             //whomst picked up what
-            Debug.Log("Player " + GetComponent<NetworkIdentity>().playerControllerId + " picked up " + itemToPickUp.GetComponent<Pickup>().ToString());
+            Debug.Log("Player " + GetComponent<PlayerResources>().GetId() + " picked up " + itemToPickUp.GetComponent<Pickup>().ToString());
             //destroy the item from the level
             Destroy(itemToPickUp);
             itemToPickUp = null;

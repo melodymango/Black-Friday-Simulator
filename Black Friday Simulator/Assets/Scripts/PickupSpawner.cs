@@ -46,7 +46,7 @@ public class PickupSpawner : NetworkBehaviour {
     private List<string> shoppingList = new List<string>();
 
     // Use this for initialization
-    public override void OnStartServer () {
+    public override void OnStartServer() {
 
         var spawnRotation = Quaternion.Euler(
                 0.0f,
@@ -70,8 +70,11 @@ public class PickupSpawner : NetworkBehaviour {
         //Generate shopping list for this round
         GenerateShoppingList();
 
-        //Distribute shopping list to players
-        Invoke("DistributeShoppingList", 0.5f);
+        //Assign players unique ids
+        Invoke("AssignPlayerIds", 0.5f);
+
+        //Distribute the shopping list
+        Invoke("DistributeShoppingList", 0.6f);
     }
 	
 	// Update is called once per frame
@@ -141,10 +144,20 @@ public class PickupSpawner : NetworkBehaviour {
 
     /*Finds all players currently on the server, and assigns the shopping list to each of them*/
     private void DistributeShoppingList() { 
-        players = GameObject.FindGameObjectsWithTag("Player");
-        Debug.Log("Number of players: " + players.Length);
         foreach (GameObject player in players) 
             player.GetComponent<PlayerResources>().RpcSetShoppingList(ListToString(shoppingList));
-        
+    }
+
+    private void AssignPlayerIds()
+    {
+        players = GameObject.FindGameObjectsWithTag("Player");
+        Debug.Log("Number of players: " + players.Length);
+        int startingId = 0;
+        foreach (GameObject player in players)
+        {
+            player.GetComponent<PlayerResources>().SetId(startingId);
+            startingId++;
+            Debug.Log("Player " + player.GetComponent<PlayerResources>().GetId() + "has joined the game.");
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿/* Keeps track of the player's money and items picked up.
+﻿/* Keeps track of the player's id, money and items picked up.
  Is also in charge of rendering the UI for the player's inventory and money*/
 
 using System.Collections;
@@ -14,8 +14,10 @@ public class PlayerResources : NetworkBehaviour {
     public Text currentMoneyText; //the UI element that displays their money
     public Text shoppingListText; //UI element that shows shopping list
     public Text inventoryText; //UI element displaying player's current inventory
-    private string shoppingList = "";
-    private List<string> inventory = new List<string>();
+    public List<string> inventory = new List<string>();
+
+    private int id = -1;
+    private string shoppingList = ""; //Shopping List
     private bool shoppingListVisible = false;
     [SyncVar]
     private float currentMoney = startingMoney;
@@ -58,7 +60,7 @@ public class PlayerResources : NetworkBehaviour {
         inventoryText.text = "Inventory:\n" + InventoryToString();
     }
 
-    
+    //toggle visibility of shopping list
     public void ToggleShoppingList() {
         if (!shoppingListVisible)
         {
@@ -80,7 +82,7 @@ public class PlayerResources : NetworkBehaviour {
     [ClientRpc]
     public void RpcSetShoppingList(string s) {
         shoppingList = s;
-        Debug.Log("Player " + GetComponent<NetworkIdentity>().playerControllerId + "'s shopping list: " + shoppingList);
+        Debug.Log("Player " + id + "'s shopping list: " + shoppingList);
     }
 
     public float GetCurrentMoney() {
@@ -107,4 +109,15 @@ public class PlayerResources : NetworkBehaviour {
     {
         return shoppingList;
     }
+
+    public int GetId()
+    {
+        return id;
+    }
+
+    public void SetId(int i)
+    {
+        id = i;
+    }
 }
+

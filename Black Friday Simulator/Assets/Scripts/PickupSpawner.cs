@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿/* In charge of determining/spawning pickups, randomly generating a shopping list for each round*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -53,6 +55,7 @@ public class PickupSpawner : NetworkBehaviour {
 
         InitializePickups();
 
+        //Randomly spawn pickups in a specified square area.
         foreach (Pickup p in pickupList) {
             var spawnPosition = new Vector3(
                 Random.Range(-15.0f, 15.0f),
@@ -64,19 +67,16 @@ public class PickupSpawner : NetworkBehaviour {
             NetworkServer.Spawn(pickup);
         }
 
+        //Generate shopping list for this round
         GenerateShoppingList();
 
-        /*
-        foreach (GameObject player in players)
-        {
-            player.GetComponent<PlayerResources>().SetShoppingList(shoppingList);
-        }
-        */
+        //Distribute shopping list to players
+        DistributeShoppingList();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        players = GameObject.FindGameObjectsWithTag("Player");
+
     }
 
     //Initializes pickups
@@ -137,5 +137,13 @@ public class PickupSpawner : NetworkBehaviour {
 
     public List<string> GetShoppingList() {
         return shoppingList;
+    }
+
+    /*Finds all players currently on the server, and assigns the shopping list to each of them*/
+    private void DistributeShoppingList() { 
+        players = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject player in players) 
+            player.GetComponent<PlayerResources>().SetShoppingList(shoppingList);
+        
     }
 }

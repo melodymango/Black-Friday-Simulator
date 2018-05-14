@@ -1,4 +1,6 @@
-﻿using System;
+﻿/* Player movement and interaction with items (picking up and dropping items) */
+
+using System;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -63,7 +65,11 @@ public class PlayerController : NetworkBehaviour {
         var playerCurrentMoney = GetComponent<PlayerResources>();
         //Will not let the player pickup the item if buying it will reduce their current money below 0.
         if (playerCurrentMoney != null && playerCurrentMoney.GetCurrentMoney() - itemToPickUp.GetComponent<Pickup>().GetPrice() >= 0) {
+            //subtract the cost of the item being picked up from the player's remaining currency
             playerCurrentMoney.DecrementAmount(itemToPickUp.GetComponent<Pickup>().GetPrice());
+            //add the picked up item to the player's inventory
+            GetComponent<PlayerResources>().AddItemToInventory(itemToPickUp.GetComponent<Pickup>());
+            //destroy the item from the level
             Destroy(itemToPickUp);
             itemToPickUp = null;
             canPickUp = false;

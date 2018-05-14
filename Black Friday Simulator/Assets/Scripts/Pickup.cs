@@ -78,6 +78,11 @@ public class Pickup : NetworkBehaviour
         }
     }*/
 
+    public override string ToString()
+    {
+        return pname + " ($" + price + ")";
+    }
+
     public bool HasPlayer()
     {
         return hasPlayer;

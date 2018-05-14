@@ -71,7 +71,7 @@ public class PickupSpawner : NetworkBehaviour {
         GenerateShoppingList();
 
         //Distribute shopping list to players
-        DistributeShoppingList();
+        Invoke("DistributeShoppingList", 0.5f);
     }
 	
 	// Update is called once per frame
@@ -113,7 +113,7 @@ public class PickupSpawner : NetworkBehaviour {
         for(int i = 0; i < shoppingListLength; i++) {
             shoppingList.Add(pickupNames[i]);
         }
-        Debug.Log(ListToString(shoppingList));
+        //Debug.Log(ListToString(shoppingList));
     }
 
     //Shuffles the list of names
@@ -142,8 +142,9 @@ public class PickupSpawner : NetworkBehaviour {
     /*Finds all players currently on the server, and assigns the shopping list to each of them*/
     private void DistributeShoppingList() { 
         players = GameObject.FindGameObjectsWithTag("Player");
+        Debug.Log("Number of players: " + players.Length);
         foreach (GameObject player in players) 
-            player.GetComponent<PlayerResources>().SetShoppingList(shoppingList);
+            player.GetComponent<PlayerResources>().RpcSetShoppingList(ListToString(shoppingList));
         
     }
 }

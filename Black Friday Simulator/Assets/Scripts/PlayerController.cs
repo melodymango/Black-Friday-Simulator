@@ -68,7 +68,9 @@ public class PlayerController : NetworkBehaviour {
             //subtract the cost of the item being picked up from the player's remaining currency
             playerCurrentMoney.DecrementAmount(itemToPickUp.GetComponent<Pickup>().GetPrice());
             //add the picked up item to the player's inventory
-            GetComponent<PlayerResources>().AddItemToInventory(itemToPickUp.GetComponent<Pickup>());
+            GetComponent<PlayerResources>().CmdAddItemToInventory(itemToPickUp.GetComponent<Pickup>().ToString());
+            //whomst picked up what
+            Debug.Log("Player " + GetComponent<NetworkIdentity>().playerControllerId + " picked up " + itemToPickUp.GetComponent<Pickup>().ToString());
             //destroy the item from the level
             Destroy(itemToPickUp);
             itemToPickUp = null;

@@ -97,4 +97,9 @@ public class Pickup : NetworkBehaviour
     {
         return price;
     }
+
+    public string GetName()
+    {
+        return pname;
+    }
 }

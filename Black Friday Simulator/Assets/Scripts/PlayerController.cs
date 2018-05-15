@@ -3,10 +3,12 @@
 using System;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class PlayerController : NetworkBehaviour {
 
     public float playerSpeed = 4f;
+    public Text itemPopUp;
     [SyncVar]
     private bool canPickUp = false;
     [SyncVar]
@@ -56,6 +58,24 @@ public class PlayerController : NetworkBehaviour {
             canPickUp = false;
             itemToPickUp = null;
             //Debug.Log("Can no longer pick up item.");
+            itemPopUp.enabled = false;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (isLocalPlayer)
+        {
+            if (collision.tag == "Pickup")
+            {
+                itemPopUp.enabled = true;
+                Pickup p = collision.gameObject.GetComponent<Pickup>();
+                //display name and price
+                Debug.Log(p.GetPrice());
+                Debug.Log(p.GetName());
+                itemPopUp.text = p.ToString();
+                //itemPopUp.transform.position = p.transform.position;
+            }
         }
     }
 

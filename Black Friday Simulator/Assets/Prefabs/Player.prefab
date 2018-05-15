@@ -120,7 +120,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1878068981861822
 GameObject:
   m_ObjectHideFlags: 0
@@ -547,7 +547,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 10
-  itemPopUp: {fileID: 114973914908936608}
+  itemPopUp: {fileID: 0}
   itemToPickUp: {fileID: 0}
 --- !u!114 &114876108906804312
 MonoBehaviour:

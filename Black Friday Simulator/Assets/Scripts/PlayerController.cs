@@ -60,6 +60,7 @@ public class PlayerController : NetworkBehaviour {
 
             if (isLocalPlayer)
             {
+                itemPopUp = collision.gameObject.GetComponentInChildren<Text>();
                 itemPopUp.enabled = true;
                 //display name and price
                 itemPopUp.text = itemToPickUp.GetComponent<Pickup>().ToString();
@@ -70,17 +71,10 @@ public class PlayerController : NetworkBehaviour {
     private void OnTriggerExit2D(Collider2D collision) {
         if (collision.tag == "Pickup") {
             canPickUp = false;
-            itemToPickUp = null;
             //Debug.Log("Can no longer pick up item.");
+            itemPopUp = collision.gameObject.GetComponentInChildren<Text>();
             itemPopUp.enabled = false;
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.tag == "Pickup")
-        {
-
+            itemToPickUp = null;
         }
     }
 

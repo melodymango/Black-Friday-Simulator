@@ -14,7 +14,7 @@ public class PlayerResources : NetworkBehaviour {
     public Text currentMoneyText; //the UI element that displays their money
     public Text shoppingListText; //UI element that shows shopping list
     public Text inventoryText; //UI element displaying player's current inventory
-    public List<string> inventory = new List<string>();
+    public SyncListString inventory = new SyncListString();
 
     private int id = -1;
     private string shoppingList = ""; //Shopping List

@@ -71,6 +71,7 @@ public class PlayerController : NetworkBehaviour {
             GetComponent<PlayerResources>().CmdAddItemToInventory(itemToPickUp.GetComponent<Pickup>().ToString());
             //whomst picked up what
             Debug.Log("Player " + GetComponent<PlayerResources>().GetId() + " picked up " + itemToPickUp.GetComponent<Pickup>().ToString());
+            Debug.Log("Player " + GetComponent<PlayerResources>().GetId() + "'s inventory:\n" + GetComponent<PlayerResources>().InventoryToString());
             //destroy the item from the level
             Destroy(itemToPickUp);
             itemToPickUp = null;

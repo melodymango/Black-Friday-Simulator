@@ -10,6 +10,8 @@ public class PlayerController : NetworkBehaviour {
     public float playerSpeed = 4f;
     public Text itemPopUp;
     [SyncVar]
+    private bool canMove = true;
+    [SyncVar]
     private bool canPickUp = false;
     [SyncVar]
     public GameObject itemToPickUp = null;
@@ -29,12 +31,16 @@ public class PlayerController : NetworkBehaviour {
             return;
         }
 
-        //Player needs rigidbody to collide with other stuff. Sets the rigidbody's velocity, no acceleration so the player doesn't slide or anything
-        Vector2 targetVelocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        GetComponent<Rigidbody2D>().velocity = targetVelocity * playerSpeed;
+        if (canMove)
+        {
+            //Player needs rigidbody to collide with other stuff. Sets the rigidbody's velocity, no acceleration so the player doesn't slide or anything
+            Vector2 targetVelocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            GetComponent<Rigidbody2D>().velocity = targetVelocity * playerSpeed;
 
-        if (Input.GetKeyDown(KeyCode.Space) && itemToPickUp && canPickUp) {
-            CmdPickupItem();
+            if (Input.GetKeyDown(KeyCode.Space) && itemToPickUp && canPickUp)
+            {
+                CmdPickupItem();
+            }
         }
 
         //old movement code, didn't work for collisions but I'm keeping this here just in case
@@ -96,5 +102,11 @@ public class PlayerController : NetworkBehaviour {
             itemToPickUp = null;
             canPickUp = false;
         }
+    }
+
+    [Command]
+    public void CmdSetCanMove(bool b)
+    {
+        canMove = b;
     }
 }

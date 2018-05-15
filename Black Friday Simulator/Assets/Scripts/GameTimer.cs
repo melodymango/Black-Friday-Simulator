@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class GameTimer : NetworkBehaviour
 {
     private const float roundTime = 30.0f;
-    private const float countDownTime = 5.0f;
+    private const float countDownTime = 8.0f;
     [SyncVar]
     public float gameTime; //The length of a game, in seconds.
     [SyncVar]
@@ -25,6 +25,7 @@ public class GameTimer : NetworkBehaviour
 
     void Start()
     {
+        roundHasStarted = false;
         timer = countDownTime;
         if (isServer)
         { // For the host to do: use the timer and control the time.
@@ -46,13 +47,18 @@ public class GameTimer : NetworkBehaviour
             }
         }
     }
+
     void Update()
     {
-        
+        /*
         if (!roundHasStarted)
         {
-
-        }
+            PlayerController[] playerControllers = FindObjectsOfType<PlayerController>();
+            foreach (PlayerController p in playerControllers)
+            {
+                p.CmdSetCanMove(false);
+            }
+        }*/
 
         if (masterTimer)
         { //Only the MASTER timer controls the time
@@ -80,5 +86,26 @@ public class GameTimer : NetworkBehaviour
                 }
             }
         }
+
+        if (timer < 1 && !roundHasStarted)
+        {
+            //Debug.Log("Time: " + timer);
+            countdownTimerText.text = "START SHOPPING!!";
+            //PlayerController[] playerControllers = FindObjectsOfType<PlayerController>();
+            StartCoroutine(RoundStartPause(3));
+            timer = roundTime;
+            roundHasStarted = true;
+            /*
+            foreach (PlayerController p in playerControllers)
+            {
+                p.CmdSetCanMove(true);
+            }*/
+
+        }
+    }
+
+    IEnumerator RoundStartPause(int seconds)
+    {
+        yield return new WaitForSeconds(seconds);
     }
 }

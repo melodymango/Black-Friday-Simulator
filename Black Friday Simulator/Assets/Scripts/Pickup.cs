@@ -5,9 +5,10 @@ using UnityEngine.Networking;
 public class Pickup : NetworkBehaviour
 {
     public int id;
+    [SyncVar]
     public string pname;
+    [SyncVar]
     public float price;
-
     [SyncVar]
     private bool hasPlayer = false;
     [SyncVar]

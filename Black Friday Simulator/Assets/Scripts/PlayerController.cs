@@ -49,7 +49,15 @@ public class PlayerController : NetworkBehaviour {
         if (collision.tag == "Pickup") {
             canPickUp = true;
             itemToPickUp = collision.gameObject;
+            Debug.Log("Player " + GetComponent<PlayerResources>().GetId() + " standing on " + itemToPickUp.GetComponent<Pickup>().ToString());
             //Debug.Log("Can pick up item.");
+
+            if (isLocalPlayer)
+            {
+                itemPopUp.enabled = true;
+                //display name and price
+                itemPopUp.text = itemToPickUp.GetComponent<Pickup>().ToString();
+            }
         }
     }
 
@@ -64,18 +72,9 @@ public class PlayerController : NetworkBehaviour {
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (isLocalPlayer)
+        if (collision.tag == "Pickup")
         {
-            if (collision.tag == "Pickup")
-            {
-                itemPopUp.enabled = true;
-                Pickup p = collision.gameObject.GetComponent<Pickup>();
-                //display name and price
-                Debug.Log(p.GetPrice());
-                Debug.Log(p.GetName());
-                itemPopUp.text = p.ToString();
-                //itemPopUp.transform.position = p.transform.position;
-            }
+
         }
     }
 
@@ -90,8 +89,8 @@ public class PlayerController : NetworkBehaviour {
             //add the picked up item to the player's inventory
             GetComponent<PlayerResources>().CmdAddItemToInventory(itemToPickUp.GetComponent<Pickup>().ToString());
             //whomst picked up what
-            Debug.Log("Player " + GetComponent<PlayerResources>().GetId() + " picked up " + itemToPickUp.GetComponent<Pickup>().ToString());
-            Debug.Log("Player " + GetComponent<PlayerResources>().GetId() + "'s inventory:\n" + GetComponent<PlayerResources>().InventoryToString());
+            //Debug.Log("Player " + GetComponent<PlayerResources>().GetId() + " picked up " + itemToPickUp.GetComponent<Pickup>().ToString());
+            //Debug.Log("Player " + GetComponent<PlayerResources>().GetId() + "'s inventory:\n" + GetComponent<PlayerResources>().InventoryToString());
             //destroy the item from the level
             Destroy(itemToPickUp);
             itemToPickUp = null;

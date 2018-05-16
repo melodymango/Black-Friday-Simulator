@@ -8,6 +8,8 @@ using UnityEngine.Networking;
 public class PickupSpawner : NetworkBehaviour {
 
     public GameObject pickupPrefab;
+    public float floorWidth;
+    public float floorHeight;
     public Sprite[] pickupImages;
     private GameObject[] players;
     private const int numPickupsToSpawn = 20;
@@ -59,8 +61,8 @@ public class PickupSpawner : NetworkBehaviour {
         //Randomly spawn pickups in a specified square area.
         foreach (Pickup p in pickupList) {
             var spawnPosition = new Vector3(
-                Random.Range(-15.0f, 15.0f),
-                Random.Range(-15.0f, 15.0f),
+                Random.Range(-floorWidth/2+1, floorWidth/2-1),
+                Random.Range(-floorHeight/2+1, floorHeight/2-1),
                 -1.0f);
 
             GameObject pickup = Instantiate(pickupPrefab, spawnPosition, spawnRotation);

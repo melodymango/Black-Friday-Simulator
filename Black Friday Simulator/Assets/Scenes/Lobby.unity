@@ -302,7 +302,7 @@ MonoBehaviour:
   m_GamePlayerPrefab: {fileID: 1147090412222108, guid: 3f6744c8b0b657a45a6ae587b47f7fe7,
     type: 2}
   m_LobbyScene: Lobby
-  m_PlayScene: Network Test
+  m_PlayScene: Main Level
   lobbySlots: []
 --- !u!4 &1564342810
 Transform:

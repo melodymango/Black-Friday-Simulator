@@ -63,7 +63,7 @@ public class PickupSpawner : NetworkBehaviour {
                 -1.0f);
 
             GameObject pickup = Instantiate(pickupPrefab, spawnPosition, spawnRotation);
-            pickup.GetComponent<Pickup>().SetAttributes(p.id, p.pname, p.price);
+            pickup.GetComponent<Pickup>().SetAttributes(p.pname, p.price);
             NetworkServer.Spawn(pickup);
         }
 
@@ -84,9 +84,6 @@ public class PickupSpawner : NetworkBehaviour {
 
     //Initializes pickups
     private void InitializePickups() {
-
-        int id = 0;
-
         //Cycle through every pickup name in the list
         for (int i = 0; i < pickupNames.Count; i++) {
 
@@ -96,9 +93,8 @@ public class PickupSpawner : NetworkBehaviour {
             for (int q = 0; q < quantity; q++) {
                 //Randomly generate a price for the pickup
                 int price = Random.Range(minPrice, maxPrice + 1);
-                pickupList.Add(new Pickup(id, pickupNames[i], price));
+                pickupList.Add(new Pickup(pickupNames[i], price));
                 //Assign unique id to pickup for identification purposes
-                id++; 
             }
         }
     }
@@ -148,6 +144,7 @@ public class PickupSpawner : NetworkBehaviour {
             player.GetComponent<PlayerResources>().RpcSetShoppingList(ListToString(shoppingList));
     }
 
+    //Assigns unique id to player. Not sure if I actually need this but I'm keeping it here
     private void AssignPlayerIds()
     {
         players = GameObject.FindGameObjectsWithTag("Player");

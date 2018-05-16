@@ -1,4 +1,6 @@
-﻿/* Taken from https://answers.unity.com/questions/1179602/implementing-server-side-code-with-unet.html and modified*/
+﻿/* Taken from https://answers.unity.com/questions/1179602/implementing-server-side-code-with-unet.html and modified.
+ This script handles the round timers for the game. First, there is a 5 second pre-round countdown where players cannot move.
+ Afterwards, the round actually begins, and players are free to move.*/
 
 using System.Collections;
 using System.Collections.Generic;
@@ -8,12 +10,12 @@ using UnityEngine.UI;
 
 public class GameTimer : NetworkBehaviour
 {
-    private const float roundTime = 30.0f;
-    private const float countDownTime = 8.0f;
+    private const float roundTime = 30.0f; //How long each round of the game should be
+    private const float countDownTime = 6.0f; //The pre-round countdown timer
     [SyncVar]
     public float gameTime; //The length of a game, in seconds.
     [SyncVar]
-    public float timer; //How long the game has been running. -1=waiting for players, -2=game is done
+    public float timer; //How long the game has been running.
     [SyncVar]
     public bool masterTimer = false; //Is this the master timer?
     [SyncVar]
@@ -50,15 +52,33 @@ public class GameTimer : NetworkBehaviour
 
     void Update()
     {
-        /*
+        //Debug.Log("Round has started: " + roundHasStarted + "for player " + GetComponent<PlayerResources>().GetId());
         if (!roundHasStarted)
         {
-            PlayerController[] playerControllers = FindObjectsOfType<PlayerController>();
+            /*PlayerController[] playerControllers = FindObjectsOfType<PlayerController>();
             foreach (PlayerController p in playerControllers)
             {
-                p.CmdSetCanMove(false);
+                p.SetCanMove(false);
+            }*/
+
+            GetComponent<PlayerController>().SetCanMove(false);
+
+            if (timer < 0)
+            {
+                Debug.Log("Round is starting.");
+                //Debug.Log("Time: " + timer);
+                countdownTimerText.text = "START SHOPPING!!";
+                //PlayerController[] playerControllers = FindObjectsOfType<PlayerController>();
+                StartCoroutine(RoundStartPause(3f));
+                timer = roundTime;
+                roundHasStarted = true;
+                GetComponent<PlayerController>().SetCanMove(true);
+                /*foreach (PlayerController p in playerControllers)
+                {
+                    p.SetCanMove(true);
+                }*/
             }
-        }*/
+        }
 
         if (masterTimer)
         { //Only the MASTER timer controls the time
@@ -87,24 +107,25 @@ public class GameTimer : NetworkBehaviour
             }
         }
 
+        /*
         if (timer < 1 && !roundHasStarted)
         {
+            Debug.Log("Round is starting.");
             //Debug.Log("Time: " + timer);
             countdownTimerText.text = "START SHOPPING!!";
-            //PlayerController[] playerControllers = FindObjectsOfType<PlayerController>();
-            StartCoroutine(RoundStartPause(3));
+            PlayerController[] playerControllers = FindObjectsOfType<PlayerController>();
+            StartCoroutine(RoundStartPause(3f));
             timer = roundTime;
             roundHasStarted = true;
-            /*
             foreach (PlayerController p in playerControllers)
             {
-                p.CmdSetCanMove(true);
-            }*/
+                p.RpcSetCanMove(true);
+            }
 
-        }
+        }*/
     }
 
-    IEnumerator RoundStartPause(int seconds)
+    IEnumerator RoundStartPause(float seconds)
     {
         yield return new WaitForSeconds(seconds);
     }

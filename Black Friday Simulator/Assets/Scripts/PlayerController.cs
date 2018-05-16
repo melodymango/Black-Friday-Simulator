@@ -55,7 +55,7 @@ public class PlayerController : NetworkBehaviour {
         if (collision.tag == "Pickup") {
             canPickUp = true;
             itemToPickUp = collision.gameObject;
-            Debug.Log("Player " + GetComponent<PlayerResources>().GetId() + " standing on " + itemToPickUp.GetComponent<Pickup>().ToString());
+            //Debug.Log("Player " + GetComponent<PlayerResources>().GetId() + " standing on " + itemToPickUp.GetComponent<Pickup>().ToString());
             //Debug.Log("Can pick up item.");
 
             if (isLocalPlayer)
@@ -98,8 +98,7 @@ public class PlayerController : NetworkBehaviour {
         }
     }
 
-    [Command]
-    public void CmdSetCanMove(bool b)
+    public void SetCanMove(bool b)
     {
         canMove = b;
     }

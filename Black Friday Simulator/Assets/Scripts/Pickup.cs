@@ -4,7 +4,6 @@ using UnityEngine.Networking;
 
 public class Pickup : NetworkBehaviour
 {
-    public int id;
     [SyncVar]
     public string pname;
     [SyncVar]
@@ -49,15 +48,13 @@ public class Pickup : NetworkBehaviour
     }
 
     //constructor
-    public Pickup(int id, string name, float price) {
-        this.id = id;
+    public Pickup(string name, float price) {
         this.pname = name;
         this.price = price;
     }
 
     //set attributes
-    public void SetAttributes(int id, string name, float price) {
-        this.id = id;
+    public void SetAttributes(string name, float price) {
         this.pname = name;
         this.price = price;
     }

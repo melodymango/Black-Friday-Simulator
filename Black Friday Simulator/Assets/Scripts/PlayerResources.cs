@@ -15,6 +15,7 @@ public class PlayerResources : NetworkBehaviour {
     public Text shoppingListText; //UI element that shows shopping list
     public Text inventoryText; //UI element displaying player's current inventory
     public SyncListString inventory = new SyncListString();
+    public GameObject pickupPrefab;
 
     private int id = -1;
     private string shoppingList = ""; //Shopping List
@@ -32,15 +33,40 @@ public class PlayerResources : NetworkBehaviour {
             Invoke("ToggleShoppingList", 0.5f);
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
-        
+
+    void OnGUI()
+    {
+        if (isLocalPlayer)
+        {
+            //This GUILayout block displays the player's inventory
+            GUILayout.BeginArea(new Rect(Screen.width - 250, 50, 200, Screen.height));
+            GUILayout.Label("Inventory");
+            for (var i = 0; i < inventory.Count; i++)
+            {
+                GUILayout.BeginVertical();
+                if (GUILayout.Button(inventory[i]))
+                {
+                    //Debug.Log("Dropping " + inventory[i]);
+                    CmdDropItem(i);
+                    //GetPickupAttributes(inventory[i]);
+                }
+                GUILayout.EndVertical();
+            }
+            GUILayout.EndArea();
+            
+            //Displays player UI (shopping list and money left so far)
+            DisplayUI();
+        }
+    }
+
+    // Update is called once per frame
+    void Update () {
+        /*
         //Only update/render UI for local player because each player may have differing amounts of money.
         if (isLocalPlayer) {
             //Displays player UI (shopping list and money left so far)
             DisplayUI();
-        }    
+        } */   
     }
 
     //Decrements the amount of money the player has
@@ -53,11 +79,12 @@ public class PlayerResources : NetworkBehaviour {
     }
 
     //Handles UI for the player
-    public void DisplayUI() {
+    public void DisplayUI()
+    {
         //Display how much money the player has left
         currentMoneyText.text = "$" + currentMoney + " Remaining";
         //Display inventory
-        inventoryText.text = "Inventory:\n" + InventoryToString();
+        //inventoryText.text = "Inventory:\n" + InventoryToString();
     }
 
     //toggle visibility of shopping list
@@ -79,10 +106,31 @@ public class PlayerResources : NetworkBehaviour {
         inventory.Add(i);
     }
 
+    [Command]
+    public void CmdDropItem(int i)
+    {
+        string[] item = GetPickupAttributes(inventory[i]);
+        GameObject pickup = Instantiate(pickupPrefab, transform.position, Quaternion.Euler(0.0f, 0.0f, 0.0f));
+        pickup.GetComponent<Pickup>().SetAttributes(item[0], float.Parse(item[1]));
+        NetworkServer.Spawn(pickup);
+        inventory.RemoveAt(i);
+    }
+
     [ClientRpc]
     public void RpcSetShoppingList(string s) {
         shoppingList = s;
         Debug.Log("Player " + id + "'s shopping list: " + shoppingList);
+    }
+
+    public string[] GetPickupAttributes(string p)
+    {
+        string[] separatingChars = { " ($", ")" };
+        string[] result = p.Split(separatingChars, System.StringSplitOptions.RemoveEmptyEntries);
+        for (int i = 0; i < result.Length; i++)
+        {
+            Debug.Log(result[i]);
+        }
+        return result;
     }
 
     public float GetCurrentMoney() {

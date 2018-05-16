@@ -111,7 +111,7 @@ public class PlayerResources : NetworkBehaviour {
     {
         string[] item = GetPickupAttributes(inventory[i]);
         GameObject pickup = Instantiate(pickupPrefab, transform.position, Quaternion.Euler(0.0f, 0.0f, 0.0f));
-        pickup.GetComponent<Pickup>().SetAttributes(item[0], float.Parse(item[1]));
+        pickup.GetComponent<Pickup>().SetAttributes(item[0], float.Parse(item[1]), null);
         NetworkServer.Spawn(pickup);
         inventory.RemoveAt(i);
     }

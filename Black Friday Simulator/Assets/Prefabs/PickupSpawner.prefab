@@ -86,3 +86,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupPrefab: {fileID: 1397421203743196, guid: 2ead01c00b8d0924ca9e8482ee9cdebe,
     type: 2}
+  pickupImages:
+  - {fileID: 21300000, guid: e91f583a04299e346a29b1d89d2c5f73, type: 3}
+  - {fileID: 21300000, guid: 3bd1c71195da4ed41ae98a3a335ed12b, type: 3}
+  - {fileID: 21300000, guid: 364ffe9ffa7b6e94a85c9a6b7a0a1387, type: 3}
+  - {fileID: 21300000, guid: fe3b84d8e5e917744923c894b1c4ddd5, type: 3}
+  - {fileID: 21300000, guid: 117d146babd1323438bd8e8d3bffb10e, type: 3}
+  - {fileID: 21300000, guid: d63e28a45e43f3442823534ace15f470, type: 3}
+  - {fileID: 21300000, guid: bc0526b09520f1b4d883a6edb4b7ae37, type: 3}
+  - {fileID: 21300000, guid: 5b92d6c56ea93844fba6f5feab52b048, type: 3}
+  - {fileID: 21300000, guid: f2f543c40fa163547809a55e5f09cb5e, type: 3}
+  - {fileID: 21300000, guid: 3f4b6d940ee51d04f8f1bd13c6de3b04, type: 3}
+  - {fileID: 21300000, guid: 4fdc82fb6094f4c4cbb4e1e64acdbc8a, type: 3}
+  - {fileID: 21300000, guid: 5a4cd12fd0ef0474fb418beebf489f76, type: 3}
+  - {fileID: 21300000, guid: 99bd59e7ffb89c245a3a2047072b67b2, type: 3}
+  - {fileID: 21300000, guid: 90a06bb3772fd6e49a2c10dc18a8d214, type: 3}
+  - {fileID: 21300000, guid: 8a1ab1c4b34b5bd469ef047d47c0562f, type: 3}
+  - {fileID: 21300000, guid: 2f2ac1d630f286948a3e159a2eb958d5, type: 3}
+  - {fileID: 21300000, guid: 77dbcf5c14218b749aee0cb230d1a726, type: 3}
+  - {fileID: 21300000, guid: 0e9aa98a89ca8734e98efb5d87684288, type: 3}
+  - {fileID: 21300000, guid: c2ee07e199713f34285c3bebda6951f7, type: 3}
+  - {fileID: 21300000, guid: 35f685ee0fc1ee343a39c5b7b938492e, type: 3}

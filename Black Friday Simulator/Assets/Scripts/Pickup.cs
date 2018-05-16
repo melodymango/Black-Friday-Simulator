@@ -9,28 +9,37 @@ public class Pickup : NetworkBehaviour
     [SyncVar]
     public float price;
     [SyncVar]
+    public string image;
+    [SyncVar]
     private bool hasPlayer = false;
     [SyncVar]
     private GameObject player = null;
 
+    public SpriteRenderer spriteR;
+
+    private void Start()
+    {
+        spriteR = gameObject.GetComponent<SpriteRenderer>();
+    }
+
     void Update() {
-        /*
-        if (Input.GetKeyDown(KeyCode.Space) && hasPlayer) {
+        RenderSpriteString();
+    }
 
-            if (!isLocalPlayer)
-            {
-                return;
-            }
+    //constructor
+    public Pickup(string name, float price, string image)
+    {
+        this.pname = name;
+        this.price = price;
+        this.image = image;
+    }
 
-            var playerCurrentMoney = player.gameObject.GetComponent<PlayerResources>();
-            //Will not let the player pickup the item if buying it will reduce their current money below 0.
-            if (playerCurrentMoney != null && playerCurrentMoney.GetCurrentMoney() - price >= 0) {
-                playerCurrentMoney.DecrementAmount(price);
-                Destroy(gameObject);
-                hasPlayer = false;
-                player = null;
-            }
-        }*/
+    //set attributes
+    public void SetAttributes(string name, float price, string image)
+    {
+        this.pname = name;
+        this.price = price;
+        this.image = image;
     }
 
     void OnTriggerEnter2D(Collider2D other) {
@@ -46,35 +55,6 @@ public class Pickup : NetworkBehaviour
             player = null;
         }
     }
-
-    //constructor
-    public Pickup(string name, float price) {
-        this.pname = name;
-        this.price = price;
-    }
-
-    //set attributes
-    public void SetAttributes(string name, float price) {
-        this.pname = name;
-        this.price = price;
-    }
-
-    /*
-    //make the item get picked up
-    [Command]
-    public void CmdPickupItem()
-    {
-        Debug.Log("CmdPickupItem() is being called.");
-        var playerCurrentMoney = player.gameObject.GetComponent<PlayerResources>();
-        //Will not let the player pickup the item if buying it will reduce their current money below 0.
-        if (playerCurrentMoney != null && playerCurrentMoney.GetCurrentMoney() - price >= 0)
-        {
-            playerCurrentMoney.DecrementAmount(price);
-            Destroy(gameObject);
-            hasPlayer = false;
-            player = null;
-        }
-    }*/
 
     public override string ToString()
     {
@@ -99,5 +79,10 @@ public class Pickup : NetworkBehaviour
     public string GetName()
     {
         return pname;
+    }
+
+    public void RenderSpriteString()
+    {
+        spriteR.sprite = Resources.Load<Sprite>("Sprites/"+image) as Sprite;
     }
 }

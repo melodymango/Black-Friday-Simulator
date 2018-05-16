@@ -8,6 +8,7 @@ using UnityEngine.Networking;
 public class PickupSpawner : NetworkBehaviour {
 
     public GameObject pickupPrefab;
+    public Sprite[] pickupImages;
     private GameObject[] players;
     private const int numPickupsToSpawn = 20;
     private const int MaxNumQuantityOfEach = 3;
@@ -63,7 +64,7 @@ public class PickupSpawner : NetworkBehaviour {
                 -1.0f);
 
             GameObject pickup = Instantiate(pickupPrefab, spawnPosition, spawnRotation);
-            pickup.GetComponent<Pickup>().SetAttributes(p.pname, p.price);
+            pickup.GetComponent<Pickup>().SetAttributes(p.pname, p.price, p.image);
             NetworkServer.Spawn(pickup);
         }
 
@@ -93,7 +94,8 @@ public class PickupSpawner : NetworkBehaviour {
             for (int q = 0; q < quantity; q++) {
                 //Randomly generate a price for the pickup
                 int price = Random.Range(minPrice, maxPrice + 1);
-                pickupList.Add(new Pickup(pickupNames[i], price));
+                //Sprite image = pickupImages[i];
+                pickupList.Add(new Pickup(pickupNames[i], price, pickupNames[i]));
                 //Assign unique id to pickup for identification purposes
             }
         }

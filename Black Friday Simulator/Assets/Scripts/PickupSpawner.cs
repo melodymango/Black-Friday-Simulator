@@ -60,10 +60,18 @@ public class PickupSpawner : NetworkBehaviour {
 
         //Randomly spawn pickups in a specified square area.
         foreach (Pickup p in pickupList) {
-            var spawnPosition = new Vector3(
-                Random.Range(-floorWidth/2+1, floorWidth/2-1),
-                Random.Range(-floorHeight/2+1, floorHeight/2-1),
+            var spawnPosition = new Vector3(0f,0f,0f);
+            Collider2D[] hitColliders;
+
+            do
+            {
+                spawnPosition = new Vector3(
+                Random.Range(-floorWidth / 2 + 1, floorWidth / 2 - 1),
+                Random.Range(-floorHeight / 2 + 1, floorHeight / 2 - 1),
                 -1.0f);
+                hitColliders = Physics2D.OverlapCircleAll(spawnPosition, 1.1f);
+                //Debug.Log(hitColliders.Length);
+            } while (hitColliders.Length > 0);
 
             GameObject pickup = Instantiate(pickupPrefab, spawnPosition, spawnRotation);
             pickup.GetComponent<Pickup>().SetAttributes(p.pname, p.price, p.image);

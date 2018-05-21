@@ -33,7 +33,7 @@ public class PlayerResources : NetworkBehaviour {
         if (isLocalPlayer)
         {
             ResourceUI.GetComponent<Canvas>().enabled = true;
-            Invoke("ToggleShoppingList", 0.5f);
+            Invoke("ToggleShoppingList", 1f);
         }
     }
 

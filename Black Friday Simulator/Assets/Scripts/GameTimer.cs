@@ -84,6 +84,11 @@ public class GameTimer : NetworkBehaviour
         { //Only the MASTER timer controls the time
             timer -= Time.deltaTime;
             //Debug.Log(timer);
+            if(roundHasStarted && timer<= 0)
+            {
+                GetComponent<PlayerController>().SetCanMove(false);
+                timer = 0;
+            }
         }
 
         if (isLocalPlayer)

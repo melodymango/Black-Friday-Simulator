@@ -8,12 +8,18 @@ public class ScoreDisplay : NetworkBehaviour {
 
     public GameObject[] players;
     public GameObject ResourceUI;
+    public bool isGamePlaying; //Boolean for if playtime is active
+    public float time; //Grabs time
+    public bool gameCreated;
     public string scoreString; //To get all info and then put into scoreText;
     public Text scoreText;
 
 	// Use this for initialization
 	void Start () {
         players = GameObject.FindGameObjectsWithTag("Player");
+        time = players[0].GetComponent<GameTimer>().timer;
+        isGamePlaying = players[0].GetComponent<GameTimer>().roundHasStarted;
+        gameCreated = false;
 
         ResourceUI.GetComponent<Canvas>().enabled = false;
         if (isLocalPlayer)
@@ -26,8 +32,14 @@ public class ScoreDisplay : NetworkBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
-	}
+        time = players[0].GetComponent<GameTimer>().timer;
+        isGamePlaying = players[0].GetComponent<GameTimer>().roundHasStarted;
+
+        if(time <= 0 && isGamePlaying && !gameCreated) {
+            print("in here");
+            gameCreated = true;
+        }
+    }
 
     void OnGUI()
     {
@@ -36,26 +48,19 @@ public class ScoreDisplay : NetworkBehaviour {
         foreach(GameObject p in players) {
             //print();
             scoreString += "Player " + (p.GetComponent<PlayerResources>().GetId() + 1) + " " +
-                "Items: " + p.GetComponent<PlayerResources>().getItemAmount() + " " +
-                "$" + p.GetComponent<PlayerResources>().GetCurrentMoney() + '\n';
+                "Items: " + p.GetComponent<PlayerResources>().getItemAmount() + '\n';
         }
 
         if (isLocalPlayer)
         {
-            //This GUILayout block displays the player's inventory
-            GUILayout.BeginArea(new Rect(Screen.width - 250, 50, 200, Screen.height));
-            GUILayout.Label("Scoreboard");
-            GUILayout.EndArea();
             scoreText.text = scoreString;
         }
     }
 
     //To do:
-    /*
-     * X Show something on screen
-     * X Grab components from PlayerController
-     * X Show 
-     * X Make it update
-     * Reset once things are done (probably will happen when game resets anyways)
+    /* When game is finished, show:
+     * Place name item money
+     * 
+     * make a button with stophost & stopclient (test which one is correct)
      */
     }

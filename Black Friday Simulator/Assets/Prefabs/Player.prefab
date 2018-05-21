@@ -498,7 +498,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: LEADERBOARD
+  m_Text: 
 --- !u!114 &114564545886081650
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -922,7 +922,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -303.4, y: -21}
+  m_AnchoredPosition: {x: -62, y: -21}
   m_SizeDelta: {x: 125.7, y: 21.705}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224653004092831348
@@ -958,7 +958,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -78.5, y: -137.8}
+  m_AnchoredPosition: {x: -344, y: -156.85}
   m_SizeDelta: {x: 125.7, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224824381710429200

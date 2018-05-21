@@ -10,6 +10,8 @@ using UnityEngine.UI;
 public class PlayerResources : NetworkBehaviour {
 
     public const float startingMoney = 100f;
+    public int itemAmount; //Currently shows how many items a player has. 
+                           //Eventually will change so it counts how many items are in inventory
     public GameObject ResourceUI;
     public Text currentMoneyText; //the UI element that displays their money
     public Text shoppingListText; //UI element that shows shopping list
@@ -25,6 +27,7 @@ public class PlayerResources : NetworkBehaviour {
 
     // Use this for initialization
     void Start() {
+        itemAmount = 0;
 
         ResourceUI.GetComponent<Canvas>().enabled = false;
         if (isLocalPlayer)
@@ -104,6 +107,7 @@ public class PlayerResources : NetworkBehaviour {
     [Command]
     public void CmdAddItemToInventory(string i) {
         inventory.Add(i);
+        itemAmount++;
     }
 
     [Command]
@@ -115,6 +119,7 @@ public class PlayerResources : NetworkBehaviour {
         currentMoney += float.Parse(item[1]);
         NetworkServer.Spawn(pickup);
         inventory.RemoveAt(i);
+        itemAmount--;
     }
 
     [ClientRpc]
@@ -167,6 +172,11 @@ public class PlayerResources : NetworkBehaviour {
     public void SetId(int i)
     {
         id = i;
+    }
+
+    public int getItemAmount(){
+
+        return itemAmount;
     }
 }
 

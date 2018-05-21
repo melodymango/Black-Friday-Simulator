@@ -84,12 +84,6 @@ public class GameTimer : NetworkBehaviour
         { //Only the MASTER timer controls the time
             timer -= Time.deltaTime;
             //Debug.Log(timer);
-            if (roundHasStarted && timer <= 0) // the game has ended
-            {
-                //freeze player movement and display scorebard and back to lobby button
-                GetComponent<PlayerController>().SetCanMove(false);
-                timer = 0;
-            }
         }
 
         if (isLocalPlayer)

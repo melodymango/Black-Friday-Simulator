@@ -24,7 +24,6 @@ public class PlayerResources : NetworkBehaviour {
     private int id = -1;
     private string shoppingList = ""; //Shopping List
     private bool shoppingListVisible = false;
-    private bool canDropItems = true;
     [SyncVar]
     private float currentMoney = startingMoney;
 
@@ -50,7 +49,7 @@ public class PlayerResources : NetworkBehaviour {
             for (var i = 0; i < inventory.Count; i++)
             {
                 GUILayout.BeginVertical();
-                if (GUILayout.Button(inventory[i]) && canDropItems)
+                if (GUILayout.Button(inventory[i]))
                 {
                     //Debug.Log("Dropping " + inventory[i]);
                     CmdDropItem(i);
@@ -190,11 +189,6 @@ public class PlayerResources : NetworkBehaviour {
     public int getItemAmount(){
 
         return itemAmount;
-    }
-
-    public void SetCanDropItems(bool b)
-    {
-        canDropItems = b;
     }
 }
 

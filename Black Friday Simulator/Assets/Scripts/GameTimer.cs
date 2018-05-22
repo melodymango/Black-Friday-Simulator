@@ -110,6 +110,10 @@ public class GameTimer : NetworkBehaviour
                     }
                 }
             }
+            if(roundHasStarted && timer<=0)
+            {
+                GetComponent<PlayerController>().SetCanMove(false);
+            }
         }
 
         /*

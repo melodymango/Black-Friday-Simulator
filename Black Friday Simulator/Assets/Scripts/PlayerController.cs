@@ -15,7 +15,7 @@ public class PlayerController : NetworkBehaviour {
     private bool canPickUp = false;
     [SyncVar]
     public GameObject itemToPickUp = null;
-
+	private bool isPressingPickup = false;
 
     //Only do this for the local player
     public override void OnStartLocalPlayer() {
@@ -37,10 +37,20 @@ public class PlayerController : NetworkBehaviour {
             Vector2 targetVelocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
             GetComponent<Rigidbody2D>().velocity = targetVelocity * playerSpeed;
 
-            if (Input.GetKeyDown(KeyCode.Space) && itemToPickUp && canPickUp)
+            if (Input.GetAxisRaw("Pickup") == 1 && !isPressingPickup && itemToPickUp && canPickUp)
             {
-                CmdPickupItem();
+                isPressingPickup = true;
+				CmdPickupItem();
             }
+			
+			else if(Input.GetAxisRaw("Pickup") == 1)
+			{
+				isPressingPickup = true;
+			}			
+			else
+			{
+				isPressingPickup = false;
+			}
         }
 
         //old movement code, didn't work for collisions but I'm keeping this here just in case

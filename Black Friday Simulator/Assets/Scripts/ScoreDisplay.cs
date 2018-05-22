@@ -54,7 +54,16 @@ public class ScoreDisplay : NetworkBehaviour {
         if (time <= 0 && isGamePlaying && !gameCreated)
         {
             //In here will be where the canvas will pop up and display the result screen
-            finalScoreText.text = "FINISHED";
+            string finalScore = "FINISHED! \n";
+
+            foreach (GameObject p in players)
+            {
+                finalScore += "Player " + (p.GetComponent<PlayerResources>().GetId() + 1) + " " +
+                    "Items: " + p.GetComponent<PlayerResources>().getItemAmount() + " " + 
+                    "Money: $" + p.GetComponent<PlayerResources>().GetCurrentMoney() + '\n';
+            }
+
+            finalScoreText.text = finalScore;
             print("in here");
             gameCreated = true;
             scoreString = "";
@@ -82,5 +91,9 @@ public class ScoreDisplay : NetworkBehaviour {
      * Place name item money
      * 
      * make a button with stophost & stopclient (test which one is correct)
+     * 
+     * Problem:
+     * Player 1: Cannot see other players
+     * Player 2+: ID, item = 0
      */
     }

@@ -8,8 +8,9 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class PlayerResources : NetworkBehaviour {
-
+    //[SyncVar]
     public const float startingMoney = 100f;
+    [SyncVar]
     public int itemAmount; //Currently shows how many items a player has. 
                            //Eventually will change so it counts how many items are in inventory
     public GameObject ResourceUI;
@@ -19,6 +20,7 @@ public class PlayerResources : NetworkBehaviour {
     public SyncListString inventory = new SyncListString();
     public GameObject pickupPrefab;
 
+    [SyncVar]
     private int id = -1;
     private string shoppingList = ""; //Shopping List
     private bool shoppingListVisible = false;

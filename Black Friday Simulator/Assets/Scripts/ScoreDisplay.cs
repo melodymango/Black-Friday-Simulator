@@ -15,6 +15,7 @@ public class ScoreDisplay : NetworkBehaviour {
     public Text scoreText;
     public Text finalScoreText; // When timer reaches 0, then this will pop up (maybe score Text disappears)
     public Button exitToLobby;
+    private List<string> shoppingList;
 
 	// Use this for initialization
 	void Start () {
@@ -61,6 +62,15 @@ public class ScoreDisplay : NetworkBehaviour {
 			
 			//Update player array because host didn't get it at start
 			players = GameObject.FindGameObjectsWithTag("Player");
+
+            /*List<string> shoppingList = GameObject.FindGameObjectWithTag("PickupSpawner").GetComponent<PickupSpawner>().GetShoppingList();
+            //can't do this, only works for server
+            foreach(string s in shoppingList)
+            {
+                Debug.Log(s);
+            }
+            CompareLists(shoppingList);
+            */
 
             //players = players.sort
             foreach (GameObject p in players)
@@ -114,4 +124,16 @@ public class ScoreDisplay : NetworkBehaviour {
      * Player 1: Cannot see other players
      * Player 2+: ID, item = 0
      */
+
+    //Compares a player inventory list with the shopping list
+    public int CompareLists(List<string> shopping)
+    {
+      
+        SyncListString i = GetComponent<PlayerResources>().GetInventory();
+        foreach(string s in i)
+        {
+            Debug.Log("inventory: " + s);
+        }
+        return 0;
     }
+}

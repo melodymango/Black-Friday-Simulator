@@ -196,5 +196,10 @@ public class PlayerResources : NetworkBehaviour {
     {
         canDropItems = b;
     }
+
+    public SyncListString GetInventory()
+    {
+        return inventory;
+    }
 }
 

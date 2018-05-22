@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Pickup
   - Furniture
+  - PickupSpawner
   layers:
   - Default
   - TransparentFX

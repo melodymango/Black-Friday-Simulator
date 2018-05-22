@@ -87,8 +87,8 @@ public class GameTimer : NetworkBehaviour
             //Debug.Log(timer);
             if(roundHasStarted && timer<= 0)
             {
-                GetComponent<PlayerController>().SetCanMove(false);
-                GetComponent<PlayerResources>().SetCanDropItems(false);
+                //GetComponent<PlayerController>().SetCanMove(false);
+                //GetComponent<PlayerResources>().SetCanDropItems(false);
                 timer = 0;
             }
         }

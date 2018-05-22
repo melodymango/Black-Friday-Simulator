@@ -186,5 +186,6 @@ public class PlayerController : NetworkBehaviour {
     public void SetCanMove(bool b)
     {
         canMove = b;
+        GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
     }
 }

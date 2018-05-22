@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 public class GameTimer : NetworkBehaviour
 {
-    private const float roundTime = 30.0f; //How long each round of the game should be
+    private const float roundTime = 60.0f; //How long each round of the game should be
     private const float countDownTime = 6.0f; //The pre-round countdown timer
     [SyncVar]
     public float gameTime; //The length of a game, in seconds.

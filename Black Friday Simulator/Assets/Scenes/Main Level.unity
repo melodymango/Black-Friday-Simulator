@@ -1115,6 +1115,18 @@ Prefab:
       propertyPath: floorHeight
       value: 70
       objectReference: {fileID: 0}
+    - target: {fileID: 114840105775032332, guid: 2b23f4ee9a21abe4e95f387cc1d1f1bb,
+        type: 2}
+      propertyPath: pickupImages.Array.data[10]
+      value: 
+      objectReference: {fileID: 21300000, guid: 7c9c266b065ea33489233d32cb607a65,
+        type: 3}
+    - target: {fileID: 114840105775032332, guid: 2b23f4ee9a21abe4e95f387cc1d1f1bb,
+        type: 2}
+      propertyPath: pickupImages.Array.data[13]
+      value: 
+      objectReference: {fileID: 21300000, guid: c9030b47d2d7ce44297467f2d567a77e,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2b23f4ee9a21abe4e95f387cc1d1f1bb, type: 2}
   m_IsPrefabParent: 0

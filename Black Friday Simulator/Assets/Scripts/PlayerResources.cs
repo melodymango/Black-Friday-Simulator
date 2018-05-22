@@ -123,6 +123,16 @@ public class PlayerResources : NetworkBehaviour {
         inventory.RemoveAt(i);
         itemAmount--;
     }
+	
+	//Drop a random item, called when this player gets bashed
+	[Command]
+	public void CmdDropRandomItem(){
+		if(inventory.Count > 0){
+			int totalItems = inventory.Count;
+			int itemToDrop = Random.Range(0, totalItems);
+			CmdDropItem(itemToDrop);
+		}
+	}
 
     [ClientRpc]
     public void RpcSetShoppingList(string s) {

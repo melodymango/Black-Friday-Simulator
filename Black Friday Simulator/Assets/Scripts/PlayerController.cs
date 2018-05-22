@@ -15,7 +15,14 @@ public class PlayerController : NetworkBehaviour {
     private bool canPickUp = false;
     [SyncVar]
     public GameObject itemToPickUp = null;
+	private float slideTime = 0f;				//Remaining time until regaining control after being bashed
+	public float maxSlideTime = 1f;				//Time that players should lose control when bashed
 	private bool isPressingPickup = false;
+	private float bashCoolDown = 0f;			//Remaining time until player can bash again
+	public float maxBashCoolDown = 2f;			//What the cooldown should be set to after pressing bash
+	private bool isPressingBash = false;
+	public float bashRadius = 2f;				//How close other players have to be in order to be bashed
+	public float bashForce = 10f;				//How strong the knockback is on bashed players
 
     //Only do this for the local player
     public override void OnStartLocalPlayer() {
@@ -34,7 +41,17 @@ public class PlayerController : NetworkBehaviour {
         if (canMove)
         {
             //Player needs rigidbody to collide with other stuff. Sets the rigidbody's velocity, no acceleration so the player doesn't slide or anything
-            Vector2 targetVelocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            Vector2 targetVelocity;
+			//If not sliding, can walk
+			if(slideTime <= 0)
+			{
+				targetVelocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+			}
+			else
+			{
+				slideTime -= Time.deltaTime;
+				targetVelocity = GetComponent<Rigidbody2D>().velocity*0.95f/playerSpeed;
+			}
             GetComponent<Rigidbody2D>().velocity = targetVelocity * playerSpeed;
 
             if (Input.GetAxisRaw("Pickup") == 1 && !isPressingPickup && itemToPickUp && canPickUp)
@@ -43,6 +60,7 @@ public class PlayerController : NetworkBehaviour {
 				CmdPickupItem();
             }
 			
+			//Make sure player can't just hold down the pickup button
 			else if(Input.GetAxisRaw("Pickup") == 1)
 			{
 				isPressingPickup = true;
@@ -50,6 +68,29 @@ public class PlayerController : NetworkBehaviour {
 			else
 			{
 				isPressingPickup = false;
+			}
+			
+			//Whack the shit out of each other
+			if (Input.GetAxisRaw("Bash") == 1  && !isPressingBash && bashCoolDown <= 0)
+			{
+				//Set cooldown to 2 seconds
+				bashCoolDown = maxBashCoolDown;
+				
+				//make it so you can't hold bash
+				isPressingBash = true;
+				
+				//Bash
+				CmdBash();
+			}
+			
+			//Make sure player can't spam bash
+			else if(bashCoolDown > 0){
+				bashCoolDown -= Time.deltaTime;
+			}
+			
+			//No holding bash
+			if(Input.GetAxisRaw("Bash") == 0){
+				isPressingBash = false;
 			}
         }
 
@@ -108,6 +149,40 @@ public class PlayerController : NetworkBehaviour {
         }
     }
 
+	[Command]
+	public void CmdBash()
+	{
+		//Get a list of players
+		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+		
+		//Loop through all players
+		for(int i = 0; i < players.Length; i++)
+		{
+			//You can't bash yourself, idiot
+			if(players[i] != gameObject)
+			{
+				float distanceToPlayer = Vector2.Distance(players[i].transform.position,transform.position);
+				//Debug.Log(distanceToPlayer);
+				if(distanceToPlayer < bashRadius)
+				{
+					//Debug.Log("Bashing player " + players[i].GetComponent<PlayerResources>().GetId());
+					Vector2 slideVector = players[i].transform.position-transform.position;
+					slideVector.Normalize();
+					slideVector *= bashForce;
+					players[i].GetComponent<PlayerController>().RpcSlide(slideVector,maxSlideTime); //Slide time should be less than bash cooldown
+				}
+			}
+		}
+	}
+	
+	[ClientRpc]
+	public void RpcSlide(Vector2 slideVector, float st){
+		//Debug.Log(slideVector);
+		GetComponent<Rigidbody2D>().velocity = slideVector;
+		slideTime = st;
+		GetComponent<PlayerResources>().CmdDropRandomItem();
+	}
+	
     public void SetCanMove(bool b)
     {
         canMove = b;

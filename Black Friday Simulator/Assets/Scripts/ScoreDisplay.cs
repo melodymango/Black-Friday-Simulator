@@ -55,6 +55,9 @@ public class ScoreDisplay : NetworkBehaviour {
         {
             //In here will be where the canvas will pop up and display the result screen
             string finalScore = "FINISHED! \n";
+			
+			//Update player array because host didn't get it at start
+			players = GameObject.FindGameObjectsWithTag("Player");
 
             //players = players.sort
             foreach (GameObject p in players)

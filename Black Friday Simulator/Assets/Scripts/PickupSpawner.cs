@@ -99,7 +99,7 @@ public class PickupSpawner : NetworkBehaviour {
         for (int i = 0; i < pickupNames.Count; i++) {
 
             //Randomly generate how many of the current pickup to spawn
-            int quantity = Random.Range(0, MaxNumQuantityOfEach + 1);
+            int quantity = Random.Range(1, MaxNumQuantityOfEach + 1);
 
             for (int q = 0; q < quantity; q++) {
                 //Randomly generate a price for the pickup

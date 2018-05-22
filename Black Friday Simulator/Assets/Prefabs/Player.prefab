@@ -457,7 +457,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 19
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 1
@@ -674,6 +674,8 @@ MonoBehaviour:
   playerSpeed: 10
   itemPopUp: {fileID: 0}
   itemToPickUp: {fileID: 0}
+  maxSlideTime: 1
+  maxBashCoolDown: 2
   bashRadius: 20
   bashForce: 20
 --- !u!114 &114876108906804312
@@ -923,8 +925,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -319.6, y: -156.85}
-  m_SizeDelta: {x: 331.9, y: 250}
+  m_AnchoredPosition: {x: -324.8, y: -32.7}
+  m_SizeDelta: {x: 150, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224289209215509206
 RectTransform:
@@ -1003,7 +1005,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -62, y: -21}
+  m_AnchoredPosition: {x: -130, y: -21}
   m_SizeDelta: {x: 125.7, y: 21.705}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224653004092831348

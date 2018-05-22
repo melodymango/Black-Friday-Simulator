@@ -56,6 +56,7 @@ public class ScoreDisplay : NetworkBehaviour {
             //In here will be where the canvas will pop up and display the result screen
             string finalScore = "FINISHED! \n";
 
+            //players = players.sort
             foreach (GameObject p in players)
             {
                 finalScore += "Player " + (p.GetComponent<PlayerResources>().GetId() + 1) + " " +
@@ -79,7 +80,7 @@ public class ScoreDisplay : NetworkBehaviour {
         }
 
 
-
+        //isLocalPlayer seems to be not required
         if (isLocalPlayer)
         {
             scoreText.text = scoreString;

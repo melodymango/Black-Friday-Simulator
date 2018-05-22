@@ -14,6 +14,7 @@ public class ScoreDisplay : NetworkBehaviour {
     public string scoreString; //To get all info and then put into scoreText;
     public Text scoreText;
     public Text finalScoreText; // When timer reaches 0, then this will pop up (maybe score Text disappears)
+    public Button exitToLobby;
 
 	// Use this for initialization
 	void Start () {
@@ -28,6 +29,7 @@ public class ScoreDisplay : NetworkBehaviour {
             ResourceUI.GetComponent<Canvas>().enabled = true;
             Invoke("ToggleShoppingList", 0.5f);
         }
+        exitToLobby.gameObject.SetActive(false);
 
     }
 	
@@ -55,6 +57,7 @@ public class ScoreDisplay : NetworkBehaviour {
         {
             //In here will be where the canvas will pop up and display the result screen
             string finalScore = "FINISHED! \n";
+            exitToLobby.gameObject.SetActive(true);
 			
 			//Update player array because host didn't get it at start
 			players = GameObject.FindGameObjectsWithTag("Player");
@@ -90,6 +93,17 @@ public class ScoreDisplay : NetworkBehaviour {
         }
     }
 
+    public void ExitGame()
+    {
+        if(isServer)
+        {
+            NetworkManager.singleton.StopHost();
+        }
+        else
+        {
+            NetworkManager.singleton.StopClient();
+        }
+    }
     //To do:
     /* When game is finished, show:
      * Place name item money

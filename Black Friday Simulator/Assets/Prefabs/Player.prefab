@@ -636,6 +636,8 @@ MonoBehaviour:
   scoreText: {fileID: 114422229221487028}
   finalScoreText: {fileID: 114488955086988884}
   exitToLobby: {fileID: 114080876187823414}
+  shoppingList: []
+  inventoryList: []
 --- !u!114 &114479051382465416
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -825,7 +827,7 @@ MonoBehaviour:
   maxSlideTime: 1
   maxBashCoolDown: 2
   bashRadius: 2
-  bashForce: 10
+  bashForce: 40
 --- !u!114 &114876108906804312
 MonoBehaviour:
   m_ObjectHideFlags: 1

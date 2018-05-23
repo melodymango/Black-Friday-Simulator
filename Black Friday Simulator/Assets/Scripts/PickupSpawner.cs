@@ -46,7 +46,7 @@ public class PickupSpawner : NetworkBehaviour {
     };
 
     //List of merchandise to shop for in a round
-    private List<string> shoppingList = new List<string>();
+    public List<string> shoppingList = new List<string>();
 
     // Use this for initialization
     public override void OnStartServer() {

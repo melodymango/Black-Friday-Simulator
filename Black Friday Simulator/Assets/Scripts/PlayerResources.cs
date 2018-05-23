@@ -187,8 +187,8 @@ public class PlayerResources : NetworkBehaviour {
         id = i;
     }
 
-    public int getItemAmount(){
-
+    public int getItemAmount()
+    {
         return itemAmount;
     }
 

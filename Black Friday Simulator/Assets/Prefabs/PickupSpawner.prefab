@@ -35,7 +35,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1758409032108520}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.664073, y: -0.5749346, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -86,8 +86,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupPrefab: {fileID: 1397421203743196, guid: 2ead01c00b8d0924ca9e8482ee9cdebe,
     type: 2}
-  floorWidth: 0
-  floorHeight: 0
+  floorWidth: 50
+  floorHeight: 50
   pickupImages:
   - {fileID: 21300000, guid: e91f583a04299e346a29b1d89d2c5f73, type: 3}
   - {fileID: 21300000, guid: 3bd1c71195da4ed41ae98a3a335ed12b, type: 3}
